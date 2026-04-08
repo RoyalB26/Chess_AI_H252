@@ -31,8 +31,9 @@ pip install -r requirements.txt
 ```
 
 # Start Back_End
-uvicorn Back_End/main:app --reload
-
+```
+uvicorn Back_End.main:app --reload
+```
 # Start Game
 1. Open index.html
 2. Right click
