@@ -7,7 +7,7 @@ import platform
 if platform.system() == "Windows":
     PATH = "stockfish-windows-x86-64-sse41-popcnt/stockfish/stockfish-windows-x86-64-sse41-popcnt.exe"
 elif platform.system() == "Linux":
-    PATH = "stockfish"
+    PATH = "/usr/bin/stockfish"
 
 app = FastAPI()
 app.add_middleware(
