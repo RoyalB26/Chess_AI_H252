@@ -18,7 +18,6 @@ function fen(board) {
 
 async function next_move(board) {
     board= fen(board);
-    console.log("FEN: ", board);
     const response = await fetch("http://127.0.0.1:8000/move", {
         method: "POST", // Phải là POST nếu gửi body
         headers: {
@@ -33,5 +32,21 @@ async function next_move(board) {
     return value;
 }
 
+async function get_legal_moves(board) {
+    board= fen(board);
+    const response = await fetch("http://127.0.0.1:8000/available_moves", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            'fen': board
+        })
+    });
+    const value = await response.json();
+    console.log("Available moves: ", value);
+    return value;
+}
 
-export {next_move}
+
+export {next_move, get_legal_moves}

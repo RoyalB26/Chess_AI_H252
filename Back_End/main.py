@@ -26,12 +26,14 @@ def read_root(a: int = 0, b: int = 0):
 
 @app.post("/move")
 def make_move(board: Board):
-    print("Received board FEN:", board.fen)
     color= chess.BLACK
     player= StockfishPlayer(color= color, engine_path= PATH)
     move= player.get_move(board.fen)
+    chess.Board(board.fen).push(move)
     player.close()
     return {"move": move.uci()}
 
-
-
+@app.post("/available_moves")
+def get_available_moves(board: Board):
+    available_moves = [move.uci() for move in chess.Board(board.fen).legal_moves]
+    return {"available_moves": available_moves}

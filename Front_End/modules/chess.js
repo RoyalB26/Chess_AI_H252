@@ -3,7 +3,7 @@ function chess(chessboard, statusDisplay) {
     let board = [];
     let currentPlayer = 'white';
     let selectedSquare = null;
-
+    let legalMoves = []; // Hiện tại chưa dùng, sẽ dùng để highlight ô có thể đi
     const piecesMap = {
         'r': '♜', 'n': '♞', 'b': '♝', 'q': '♛', 'k': '♚', 'p': '♟',
         'R': '♖', 'N': '♘', 'B': '♗', 'Q': '♕', 'K': '♔', 'P': '♙'
@@ -81,14 +81,18 @@ function chess(chessboard, statusDisplay) {
                 renderBoard();
                 return;
             }
-
-            // 3. Move Piece (Currently no move validation, just logic)
-            board[row][col] = pieceToMove;
-            board[fromRow][fromCol] = '';
-            selectedSquare = null;
-            currentPlayer = currentPlayer === 'white' ? 'black' : 'white';
-            updateStatus();
-            renderBoard();
+            let str_move = convert_int_move(fromRow, fromCol, row, col);
+            let islegal = check_legal_move(str_move);
+            console.log("Move: ", str_move, "Legal? ", islegal);
+            if (islegal || currentPlayer === 'black') { 
+                // 3. Move Piece (Currently no move validation, just logic)
+                board[row][col] = pieceToMove;
+                board[fromRow][fromCol] = '';
+                selectedSquare = null;
+                currentPlayer = currentPlayer === 'white' ? 'black' : 'white';
+                updateStatus();
+                renderBoard();
+            }
         } else {
             // Select a piece
             if (pieceAtClickedSquare && getPieceColor(pieceAtClickedSquare) === currentPlayer) {
@@ -120,7 +124,24 @@ function chess(chessboard, statusDisplay) {
         return currentPlayer;
     }
 
-    return { initGame, update, getCurrentBoard, getCurrentPlayer };
+    function convert_int_move(fromRow, fromCol, toRow, toCol) {
+        let fromFile = String.fromCharCode('a'.charCodeAt(0) + fromCol);
+        let fromRank = (8 - fromRow).toString();
+        let toFile = String.fromCharCode('a'.charCodeAt(0) + toCol);
+        let toRank = (8 - toRow).toString();
+        return fromFile + fromRank + toFile + toRank;
+    }
+
+    function set_legal_moves(moves) {
+        legalMoves = moves;
+    }
+
+    function check_legal_move(move) {
+        if (legalMoves.length === 0) return true; // Nếu chưa có dữ liệu hợp lệ nào, tạm cho phép tất cả
+        return legalMoves.includes(move);
+    }
+
+    return { initGame, update, getCurrentBoard, getCurrentPlayer, set_legal_moves };
 }
 
 export { chess };
