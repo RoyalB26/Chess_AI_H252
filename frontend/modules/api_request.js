@@ -1,5 +1,5 @@
 
-API_url = "https://chess-api-production-c6c5.up.railway.app"
+let API_url = "https://chess-api-production-c6c5.up.railway.app"
 
 function fen(board) {
     // board là mảng 2 chiều 8x8, ví dụ: [['r','n',...], [...]]
