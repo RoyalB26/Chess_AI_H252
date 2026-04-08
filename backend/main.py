@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
-from stockfishBot import StockfishPlayer, chess
+from .stockfishBot import StockfishPlayer, chess
 import platform
 #check is windows or linux
 if platform.system() == "Windows":
