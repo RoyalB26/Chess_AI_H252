@@ -12,10 +12,14 @@ if (chessboardElement && statusElement) {
 
 async function gameLoop() {
     while (true) {
-        const data = await next_move();
-        game.update(data.nextMove);
-        await new Promise(r => setTimeout(r, 100)); // delay 1s
+        if (game.getCurrentPlayer() === 'black') {
+            const data = await next_move(game.getCurrentBoard());
+            game.update(data.move);
+        }
+        await new Promise(r => setTimeout(r, 300));
     }
 }
 
-gameLoop();
+if (game) {
+    gameLoop();
+}

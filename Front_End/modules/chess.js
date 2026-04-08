@@ -99,17 +99,28 @@ function chess(chessboard, statusDisplay) {
     }
 
     function convertMove(str_move) {
-        let col = str_move.charCodeAt(0) - 'a'.charCodeAt(0);
-        let row = 8 - parseInt(str_move[1]);
-        return { row, col };
+        let fromCol = str_move.charCodeAt(0) - 'a'.charCodeAt(0);
+        let fromRow = 8 - parseInt(str_move[1]);
+        let toCol = str_move.charCodeAt(2) - 'a'.charCodeAt(0);
+        let toRow = 8 - parseInt(str_move[3]);
+        return { fromRow, fromCol, toRow, toCol };
     }
 
     function update(next_move){
-        let {row, col} = convertMove(next_move)
-        handleSquareClick(row, col)
+        let {fromRow, fromCol, toRow, toCol} = convertMove(next_move)
+        handleSquareClick(fromRow, fromCol)
+        handleSquareClick(toRow, toCol)
     }
 
-    return { initGame, update };
+    function getCurrentBoard() {
+        return board;
+    }
+
+    function getCurrentPlayer() {  
+        return currentPlayer;
+    }
+
+    return { initGame, update, getCurrentBoard, getCurrentPlayer };
 }
 
 export { chess };
