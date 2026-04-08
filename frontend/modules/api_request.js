@@ -1,3 +1,6 @@
+
+API_url = "https://chess-api-production-c6c5.up.railway.app"
+
 function fen(board) {
     // board là mảng 2 chiều 8x8, ví dụ: [['r','n',...], [...]]
     return board.map(row => {
@@ -18,7 +21,7 @@ function fen(board) {
 
 async function next_move(board) {
     board= fen(board);
-    const response = await fetch("http://127.0.0.1:8000/move", {
+    const response = await fetch(`${API_url}/move`, {
         method: "POST", // Phải là POST nếu gửi body
         headers: {
             "Content-Type": "application/json"
@@ -34,7 +37,7 @@ async function next_move(board) {
 
 async function get_legal_moves(board) {
     board= fen(board);
-    const response = await fetch("http://127.0.0.1:8000/available_moves", {
+    const response = await fetch(`${API_url}/available_moves`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
