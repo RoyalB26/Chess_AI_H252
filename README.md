@@ -35,7 +35,7 @@ pip install -r requirements.txt
 uvicorn Back_End.main:app --reload
 ```
 # Start Game
-1. Open index.html
+1. Open frontend/index.html
 2. Right click
 3. Open with live server
 
