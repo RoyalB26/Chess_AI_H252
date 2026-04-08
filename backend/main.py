@@ -2,8 +2,12 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from stockfishBot import StockfishPlayer, chess
-
-PATH= "stockfish-windows-x86-64-sse41-popcnt/stockfish/stockfish-windows-x86-64-sse41-popcnt.exe" 
+import platform
+#check is windows or linux
+if platform.system() == "Windows":
+    PATH = "stockfish-windows-x86-64-sse41-popcnt/stockfish/stockfish-windows-x86-64-sse41-popcnt.exe"
+elif platform.system() == "Linux":
+    PATH = "/usr/games/stockfish"
 
 app = FastAPI()
 app.add_middleware(
